@@ -11,4 +11,4 @@
 <br />
 
 - # 💻 Environment preparation:
-[go hier](https://link-url-here.org)
+- ## [HIER](https://github.com/ahmadSoliman94/mlops/tree/main/1-intro/Azure)
