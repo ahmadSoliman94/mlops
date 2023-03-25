@@ -64,7 +64,6 @@ _[Back to the top](#)_
 
 # Maturity model
 
-_[Video source](https://www.youtube.com/watch?v=XwTH8BDGzYk&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK&index=8)_
 
 The different levels of MLOps maturity that we will discuss during the course are based on the levels listed [in this Microsoft Azure article](https://docs.microsoft.com/en-us/azure/architecture/example-scenario/mlops/mlops-maturity-model). These levels are:
 
@@ -88,7 +87,7 @@ The different levels of MLOps maturity that we will discuss during the course ar
               C[Deploy\n model]
               A --> B --> C
         ```
-   * A/B tests (not covered in this course).
+
    * Model monitoring.
      * The Microsoft article actually places this feature in maturity level 4 but for our purposes it makes more sense to have it here.
 4. ***Full MLOps automation***
