@@ -60,7 +60,6 @@ flowchart LR
 
 ***Module 7*** covers ***processes***: we will see how to properly communicate between all the stakeholders of a ML project (scientists, engineers, etc) and how to work together.
 
-_[Back to the top](#)_
 
 # Maturity model
 
