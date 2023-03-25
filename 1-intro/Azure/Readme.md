@@ -187,7 +187,7 @@ Anytime you want to login to ssh instance again, type `ssh azure-mlops-zoomcamp`
 
   `export PATH="${HOME}/soft:${PATH}"`
 
-  Save it and exit using:  `STRG + T`
+  Save it and exit using:  `STRG + X`
   
   Run the following to make sure the changes are applied:
 
