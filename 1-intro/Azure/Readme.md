@@ -232,9 +232,9 @@ cd notebooks
 mkdir notebooks
 ```
 
-* run Jupyter Notebook
+* run Jupyter Lab
 
-`jupyter notebook`  
+`jupyter lab`  
  
 <p align=center>
 <img src="https://github.com/josepholaide/MLOps-Practice/blob/main/Week%201/images/jupyter%20notebook%20init.PNG?raw=true" width="700" height="300"/>
