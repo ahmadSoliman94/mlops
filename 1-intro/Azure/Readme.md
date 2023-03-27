@@ -150,9 +150,6 @@ Anytime you want to login to ssh instance again, type `ssh azure-mlops-zoomcamp`
   bash Anaconda3-2022.05-Linux-x86_64.sh
   ```
 
-* Restart ssh, if `base` is not in vm name like this 👇👇👇.  
-  `(base) azureuser@azvm:~$`
- 
 ### Install Docker
 
 * Update existing packages using 
@@ -200,6 +197,9 @@ Anytime you want to login to ssh instance again, type `ssh azure-mlops-zoomcamp`
   Run the following to make sure the changes are applied:
 
   `source .bashrc`
+  
+  ## bath must be like that: 
+  `(base) azureuser@azvm:~$`
   
 ## Verify Installation
 
