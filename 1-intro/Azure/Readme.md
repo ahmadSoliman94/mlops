@@ -108,7 +108,7 @@ Click this [link](https://git-scm.com/downloads)
 In your bash prompt, open an SSH connection to your virtual machine. Replace the IP address with the one from your VM, and replace 
 the path to the .pem with the path to where the key file was downloaded.
 
-`ssh -i ~\.ssh\file.pem azureuser@ip_address`
+`ssh -i ~/.ssh/file.pem azureuser@ip_address`
   
 For easy ssh login, do the following:
 
