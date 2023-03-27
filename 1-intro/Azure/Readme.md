@@ -160,12 +160,7 @@ Anytime you want to login to ssh instance again, type `ssh azure-mlops-zoomcamp`
 
   `sudo apt install docker.io`
   
-* To run docker without sudo:
 
-  ```
-  sudo groupadd docker
-  sudo usermod -aG docker $USER
-  ```
 
 ### Install Docker Commpose
 
@@ -226,6 +221,13 @@ Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/create": dial unix /var
 ```
 
 Restart your VM instance in azure's portal.
+
+* Run docker without sudo:
+
+  ```
+  sudo groupadd docker
+  sudo usermod -aG docker $USER
+  ```
   
 ## Setting up Jupyter Notebook
   
