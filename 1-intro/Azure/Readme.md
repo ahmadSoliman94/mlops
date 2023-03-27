@@ -1,3 +1,7 @@
+[Source video](https://www.youtube.com/watch?v=IXSiYkP23zo&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK)
+
+<br />
+
 # Setup Jupyter Notebook on Azure via SSH using Linux
 
 ## Sign in to Azure
