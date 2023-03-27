@@ -100,6 +100,10 @@ If you are on a Mac or Linux machine, open a Bash prompt.
 If you are on a Windows machine, you can use a PowerShell prompt but in this tutorial, we will use Git bash. 
 Click this [link](https://git-scm.com/downloads) 
 
+
+##  Go  to .ssh file
+![1](images/1.png)
+
 ## Open an SSH connection to your virtual machine
 In your bash prompt, open an SSH connection to your virtual machine. Replace the IP address with the one from your VM, and replace 
 the path to the .pem with the path to where the key file was downloaded.
