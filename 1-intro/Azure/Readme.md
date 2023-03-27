@@ -229,28 +229,7 @@ Restart your VM instance in azure's portal.
   sudo usermod -aG docker $USER
   ```
   
-## Setting up Jupyter Notebook
-  
-Jupyter notebook is installed with anaconda
-  
-To run Jupyter Notebook, run the following:
 
-* Create Jupyter notebook Directory
-
-```
-cd notebooks
-mkdir notebooks
-```
-
-* run Jupyter Lab
-
-`jupyter lab`  
- 
-<p align=center>
-<img src="https://github.com/josepholaide/MLOps-Practice/blob/main/Week%201/images/jupyter%20notebook%20init.PNG?raw=true" width="700" height="300"/>
-</p>
-
-Take note of the port after localhost(http://127.0.0.1:<port>/
   
 ## Port Forwarding with Vscode
 
@@ -279,6 +258,31 @@ Take note of the port after localhost(http://127.0.0.1:<port>/
 <p align=center>
 <img src="https://github.com/josepholaide/MLOps-Practice/blob/main/Week%201/images/vscode-port.PNG?raw=true" width="600" height="300"/>
 </p>
+
+<br />
+
+# Setting up Jupyter Notebook
+  
+Jupyter notebook is installed with anaconda
+  
+To run Jupyter Notebook, run the following:
+
+* Create Jupyter notebook Directory
+
+```
+cd notebooks
+mkdir notebooks
+```
+
+* run Jupyter Lab
+
+`jupyter lab`  
+ 
+<p align=center>
+<img src="https://github.com/josepholaide/MLOps-Practice/blob/main/Week%201/images/jupyter%20notebook%20init.PNG?raw=true" width="700" height="300"/>
+</p>
+
+Take note of the port after localhost(http://127.0.0.1:<port>/
 
 * Jupyter Homepage
   
