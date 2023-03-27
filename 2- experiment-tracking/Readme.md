@@ -85,3 +85,67 @@
     + Entry Points - Typically a .py or .sh file to run the entire project or some specific functionality, say an algorithm. List of entry points are mentioned in MLProject file
     - Environment - Specifications such as library dependencies for the software environment for the code to run. Supported environments - conda environments, virtualenv environments, docker environments.
 
+<br />
+
+# MLflow
+
+- ### To install MLflow:
+
+```bash
+pip install mlflow
+```
+
+- ### MLflow comes with a cli:
+
+```
+$ mlflow
+```
+```
+Usage: mlflow [OPTIONS] COMMAND [ARGS]...
+
+
+Options:
+  --version  Show the version and exit.
+  --help     Show this message and exit.
+
+Commands:
+  artifacts    Upload, list, and download artifacts from an MLflow...
+  azureml      Serve models on Azure ML.
+  db           Commands for managing an MLflow tracking database.
+  deployments  Deploy MLflow models to custom targets.
+  experiments  Manage experiments.
+  gc           Permanently delete runs in the `deleted` lifecycle stage.
+  models       Deploy MLflow models locally.
+  run          Run an MLflow project from the given URI.
+  runs         Manage runs.
+  sagemaker    Serve models on SageMaker.
+  server       Run the MLflow tracking server.
+  ui           Launch the MLflow tracking UI for local viewing of run...
+```
+
+- ### Launching MLflow ui will launch a gunicorn server:
+```bash
+$ mlflow ui
+[2022-05-24 11:47:20 +****] [14391] [INFO] Starting gunicorn 20.1.0
+[2022-05-24 11:47:20 +****] [14391] [INFO] Listening at: http://127.0.0.1:5000 (14391)
+[2022-05-24 11:47:20 +****] [14391] [INFO] Using worker: sync
+[2022-05-24 11:47:20 +****] [14392] [INFO] Booting worker with pid: 14392
+```
+
+<br />
+
+- ### We then go to the browser to view the page http://127.0.0.1:5000
+![1](images/1.png)
+
+<br />
+
+- ### MLflow UI: Create New Experiment
+![2](images/2.png)
+
+<br />
+
+
+- ### Experiment Name - Name of the Experiment
+- ### Artifact Location - Location where you'd save the files for the experiment runs
+    - ### Could be pickle file, local folder etc.
+    - ### Could even be an S3 Bucket,
