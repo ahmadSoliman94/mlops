@@ -233,7 +233,7 @@ with mlflow.start_run():
 - ### We start logging information about this tag called "developer"
 ```python
     # set tag for mlflow
-    mlflow.set_tag("developer", "Bengsoon")
+    mlflow.set_tag("developer", "Ahmad")
 ```
 - ### We logging also information about dataset. In our case we are going to save the source of the data for both training and validation:
 ```python
