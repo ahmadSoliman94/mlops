@@ -189,6 +189,12 @@ conda activate exp-tracking-env
 ```
 <br />
 
+- ### to stop mlflow ui server: 
+```
+fuser -k 5000/tcp
+```
+
+
 ## Add MLflow to Existing Notebook:
 - ### First we copy the python notebooke (`duration-prediction.ipynb`) and the `data` folder to the folder (`2- experiment-tracking`). 
 
