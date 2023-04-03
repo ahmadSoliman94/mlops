@@ -294,3 +294,207 @@ with mlflow.start_run():
 - ### To view the run details, we can click on the Start Time value:
 ![4](images/4.png)
 ![5](images/5.png)
+
+<br />
+
+# Experiment tracking with MLflow:
+## We are going to try out an xgboost model and optimize the hyperparameter tuning with a package called `hyperopt`.
+
+- ### Hyperparameter Optimization Tuning:
+
+```python
+import xgboost as xgb
+
+from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
+from hyperopt.pyll import scope
+
+train = xgb.DMatrix(X_train, label=y_train)
+valid = xgb.DMatrix(X_val, label=y_val)
+```
+- `fmin`: tries to minimize objective function.
+- `tpe`: algorithm that controls the flow.
+- `hp`: hyperparameter space.
+- `STATUS_OK`: signal if the optimization is succesful at the end of each run
+Trials: will keep track of information from each run.
+
+<br />
+
+- ### We create an objective function that trains the xgboost model with a set of hyperparameters (from hyperopt) and then validated against our validation data. For each set of hyperparameters and the model's corresponding performance score, we record them in mlflow by wrapping it around the function.
+
+```python
+def objective(params):
+    with mlflow.start_run():
+        mlflow.set_tag("model", "xgboost")
+        mlflow.log_params(params)
+        booster = xgb.train(
+            params=params,
+            dtrain=train,
+            num_boost_round=1000,
+            evals=[(valid, 'validation')],
+            early_stopping_rounds=50
+        )
+        y_pred = booster.predict(valid)
+        rmse = mean_squared_error(y_val, y_pred, squared=False)
+        mlflow.log_metric("rmse", rmse)
+
+    return {'loss': rmse, 'status': STATUS_OK}
+```
+
+- ### We then create the search space dictionary for the XGboost hyperparameters. We use `hp` to create different kinds of statistical distributions for our parameters:
+```python
+search_space = {
+    'max_depth': scope.int(hp.quniform('max_depth', 4, 100, 1)),
+    'learning_rate': hp.loguniform('learning_rate', -3, 0),
+    'reg_alpha': hp.loguniform('reg_alpha', -5, -1),
+    'reg_lambda': hp.loguniform('reg_lambda', -6, -1),
+    'min_child_weight': hp.loguniform('min_child_weight', -1, 3),
+    'objective': 'reg:linear',
+    'seed': 42
+}
+```
+
+- ### Run the `hyperopt` optimization with `fmin` method (minimize loss):
+```python
+best_result = fmin(
+    fn=objective,
+    space=search_space,
+    algo=tpe.suggest,
+    max_evals=50,
+    trials=Trials()
+)
+```
+
+- ### MLflow will track all the runs for the `hyperopt` experiments that we have conducted and we can view the results that we have logged within our objective function.
+
+- ### As we have also set the MLflow tag to "model: xgboost" in our function, we can also filter it in MLflow UI:
+
+![6](images/6.png)
+
+<br />
+
+- ### We can also visually compare them in MLflow UI by selecting all the filtered runs and click compare:
+
+![7](images/7.png)
+
+<br />
+
+# Model Selection:
+- ### There is no hard-and-fast rule to model selection, but here we will consider the following:
+
+    - ### Best metric performance (ie lowest RMSE)
+    - ### Lowest training time: sometimes we may have runs with RMSE scores not too far off from each other, but the training time taken is significantly shorter. The simpler the better, if possible.
+
+- ### To do so, we can go back to the Experiments tab in the MLflow UI to select the model that fulfils our criteria:
+- ### We know that we will use xgb model, so we will leave the tag filter from before. Then sort the model by ascending RMSE values.Select the model that fulfils our criteria. 
+
+#### -  Selecting the experiment run above, we can look at the hyperparameter values used in this run and rerun the training as our selected model in our notebook.
+
+```python 
+# Hyperparameter for run 09923bbad64045ca837a1656254ce756
+
+search_space = {
+    'max_depth': 4,
+    'learning_rate': 0.14493221791716185,
+    'reg_alpha': 0.012153110171030913,
+    'reg_lambda': 0.017881159785939696,
+    'min_child_weight': 0.674864917045824,
+    'objective': 'reg:linear',
+    'seed': 42
+}
+```
+
+<br />
+
+- ### Instead of wrapping our code with with mlflow.start_run(), we can use mlflow autolog for xgboost:
+
+```python
+mlflow.xgboost.autolog()
+
+booster = xgb.train(
+            params=params,
+            dtrain=train,
+            num_boost_round=1000,
+            evals=[(valid, 'validation')],
+            early_stopping_rounds=50
+        )
+```
+
+- ###  Automatic logging allows you to log metrics, parameters, and models without the need for explicit log statements.
+
+### - There are two ways to use autologging for more details: [Automatic Logging](https://mlflow.org/docs/latest/tracking.html#automatic-logging).
+
+![8](images/8.png)
+
+<br />
+
+## The Artifacts:
+- ### It also automatically saves the artifacts of the model as well as its corresponding environments / requirements for its usability in production phase. For xgboost, it also saves `feature_importance_weight.json` by default.
+
+- ### Under the MLmodel, it provides us information/metadata regarding the model that was saved. It also shows that the model can be used as a python_function (`pyfunc`) or as an XGBoost model. Here, we can also download the model binary.
+
+![9](images/9.png)
+
+<br />
+
+- ### At the top level of the Artifacts, it also provides us information on how we can use the saved models to make predictions (as inference models):
+
+![10](images/10.png)
+
+<br />
+
+- ## MLflow Model:
+
+1. ### We first have to make a reference to the saved model with the `runs:/{run_id}/model`, which is a path readable by MLflow.
+2. ### We can load the model as PyFuncModel or as XGBoost model (in our case we will load it as XGBoost Model).
+
+```python
+ logged_model = 'runs:/a66d6ad15ca940ec92c3a475ca5928b1/model'
+```
+
+### - Load model as PyFuncModel:
+To load as a PyFuncModel, we can use the method `mlflow.pyfunc.load_model()`
+
+```python
+   # Load model as a PyFuncModel.
+   loaded_model = mlflow.pyfunc.load_model(logged_model)
+   loaded_model
+```
+
+- ### Remember that we already have assigned variables for our validation set features?
+```python
+    # preprocessed DataFrame with DictionaryVectorizer
+    X_val = dv.transform(X_val_dict)
+
+    # convert X_val into DMatrix type
+    valid = xgb.DMatrix(X_val, label=y_val)
+```
+
+- ### As shown above in the MLflow UI, PyFuncModel allows us to use Pandas DataFrame features for its prediction method, unlike XGBoost models which requires us to convert features into `DMatrix` type.
+
+### Passing in `valid` into `loaded_model.predict()` will return an `TypeError: Not supported type for data.<class 'xgboost.core.DMatrix'>`
+
+```python
+    loaded_model.predict(valid)
+
+    >> ............
+    >> TypeError: Not supported type for data.<class 'xgboost.core.DMatrix'>
+```
+
+### - However, the model will be able to make prediction by passing in our preprocessed df X_val:
+```python
+    loaded_model.predict(X_val)
+```
+
+## - Model Environments:
+- ### MLflow also provides the Python environment from which the model was trained on. This will help the deployment of the model in the production stage to replicate the same environment as the training stage.
+
+### - MLflow automatically provides 3 types of environment files:
+- ### `conda.yaml` for Conda.
+- ### `requirements.txt` for pip.
+- ### `python_env.yaml` for virtualenv.
+
+![11](images/11.png)
+
+
+
+
