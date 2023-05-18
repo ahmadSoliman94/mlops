@@ -137,7 +137,9 @@ Public IP gotten from 👇👇👇
 </p> 
   
 Anytime you want to login to ssh instance again, type `ssh azure-mlops-zoomcamp`
-  
+
+### Note: You don't have to rent an instance in the cloud. You can follow the same instructions for setting up your local environment.
+
 ## Install Anaconda, Docker and Docker Compose 
 
 ### Install Anaconda
