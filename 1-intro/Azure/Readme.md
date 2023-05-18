@@ -222,7 +222,7 @@ docker: Got permission denied while trying to connect to the Docker daemon socke
 Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/create": dial unix /var/run/docker.sock: connect: permission denied. error
 ```
 
-Restart your VM instance in azure's portal.
+Restart your VM instance in azure's portal or write sudo befor the command
 
 * Run docker without sudo:
 
